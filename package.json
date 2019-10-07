@@ -1,0 +1,31 @@
+{
+  "name": "php-class-example",
+  "version": "1.0.0",
+  "description": "example shop front for php class",
+  "main": "index.js",
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.15.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johannesmu/php-class-d19.git"
+  },
+  "keywords": [
+    "shop",
+    "php",
+    "bootstrap"
+  ],
+  "author": "johannesm",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/johannesmu/php-class-d19/issues"
+  },
+  "homepage": "https://github.com/johannesmu/php-class-d19#readme"
+}

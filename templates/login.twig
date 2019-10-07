@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+  {% include 'partials/head.twig' %}
+  <body>
+    {% include 'partials/navigation.twig' %}
+    <main class="container-fluid">
+      <div class="row mt-4">
+        <div class="col-md-4 offset-md-4">
+          <form id="register-form" action="login.php" method="post">
+            <h4>Login to your account</h4>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" id="password" name="password" placeholder="minimum 8 characters" class="form-control">
+            </div>
+            <button class="btn btn-primary" type="submit">Login</button>
+            {% if login.success %}
+              <div class="alert alert-success">
+                Login successful!
+              </div>
+            {% elseif login.errors.account or login.errors.system %}
+              <div class="alert alert-warning">
+                {{login.errors.account}}
+              </div>
+            {% endif %}
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+    {% include 'partials/head.twig' %}
+    <body >
+    {% include 'partials/navigation.twig' %}
+        <main class="container-fluid" style="padding-top:30px;">
+            {% if wish_items | length > 0 %}
+              <div class="row">
+                <div class="col">
+                  <h4>
+                    Your cart contains {{ wish_items | length }} items
+                  </h4>
+                </div>
+              </div>
+              {% for item in wish_items %}
+                <div class="row my-2 mb-4 py-2 border-bottom border-primary">
+                  <div class="col-md-3">
+                    <img class="img-fluid" src="images/products/{{item.image}}">
+                  </div>
+                  <div class="col-md-4">
+                    <h4>{{item.name}}</h4>
+                    <p>{{item.description | slice(0,80) ~ '...' }}</p>
+                    <a href="detail.php?product_id={{item.product_id}}">Detail</a>
+                  </div>
+                  <div class="col-md-5">
+                    <form class="form-inline" method="get">
+                      <input type="hidden" name="product_id" value="{{item.product_id}}">
+                      <button class="btn btn-primary" type="submit" name="action" value="delete">Delete</button>
+                    </form>
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <h4>No items. Start adding to your cart? <?h4>
+            {% endif %}
+        </main>
+    </body>
+</html>

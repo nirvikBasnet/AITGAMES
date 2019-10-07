@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+    {% include 'partials/head.twig' %}
+    <body >
+    {% include 'partials/navigation.twig' %}
+        <main class="container-fluid" style="padding-top:30px;">
+            <div class="row">
+                <div class="col-md-5 offset-md-1">
+                    {% if detail.images | length > 1 %}
+                    <div class="carousel slide" id="product-carousel" data-ride="carousel">
+                        <div class="carousel-inner">
+                        {% for image in detail.images %}
+                        {% set active = loop.index == 1 ? 'active' : '' %}
+                            <div class="carousel-item {{active}}">
+                                <img class="w-100" src="images/products/{{image}}">
+                            </div>
+                        {% endfor %}
+                        </div>
+                        <ol class="carousel-indicators">
+                            {% for image in detail.images %}
+                            <li data-target="#product-carousel" data-slide-to="{{loop.index0}}">
+                                <img src="images/products/{{image}}" class="img-fluid">
+                            </li>
+                            {% endfor %}
+                        </ol>
+                        <a class="carousel-control-prev" href="#product-carousel" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#product-carousel" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </div>
+                    {% else %}
+                        {% for image in detail.images %}
+                            <img src="images/products/{{image}}" class="img-fluid">
+                        {% endfor %}
+                    {% endif %}
+                     
+                </div>
+                <div class="col-md-5">
+                    <h3 class="text-capitalize">{{detail.product.name}}</h3>
+                    
+                    <p>{{detail.product.description}}</p>
+                    <h5 class="price">{{detail.product.price}}</h5>
+                    {% set class= ( detail.product.quantity < 5 ) ? 'text-danger' : 'text-success' %}
+
+                    <p id="available" class="{{class}}"> {{detail.product.quantity}} available</p>
+
+                    <form id="cart-form w-100" method="get">
+                        <div class="d-flex flex-wrap">
+                                <div class="input-group flex-nowrap mr-2" style="min-width:5em;max-width:8em;">
+                                    <div class="input-group-prepend">
+                                        <button id="minus" class="btn btn-primary" type="button">&minus;</button>
+                                    </div>
+                                    <input id="quantity" type="text" class="form-control text-center" name="quantity" value="1" max="{{detail.product.quantity}}" min="1" style="min-width:3em;">
+                                    <div class="input-group-append">
+                                        <button id="plus" class="btn btn-primary"  type="button">&plus;</button>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary mr-2" name="add" value="cart">
+                                    <i class="fa fa-shopping-basket"></i>
+                                    Buy
+                                </button>
+                                <button type="submit" class="btn btn-primary mr-2" name="add" value="list">
+                                    <i class="fa fa-heart"></i>
+                                </button>
+                        </div>
+                        <input type="hidden" name="product_id" value="{{detail.product.product_id}}">
+                    </form>
+                </div>
+            </div>
+        </main>
+        <script>
+        // script for add and minus button in detail page
+        $(document).ready(
+            () => {
+                let qty = $('#quantity').val();
+                let max = $('#quantity').attr('max');
+               
+                $('#plus').click( () => {
+                    qty++;
+                    if( qty <= max ){
+                         $('#quantity').val(qty);
+                    }
+                });
+                $('#minus').click( () => {
+                    if( qty > 1 ){
+                        qty--;
+                        $('#quantity').val(qty);
+                    }
+                });
+            }
+        );
+        </script>
+    </body>
+</html>

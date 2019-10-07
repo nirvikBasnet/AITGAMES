@@ -1,0 +1,31 @@
+<div class="navbar navbar-dark bg-primary navbar-expand-lg sticky-top">
+    <a href="index.php" class="navbar-brand order-1">Shop</a>
+    <button class="navbar-toggler order-4" data-target="#main-nav" data-toggle="collapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <form class="form-inline flex-grow-1 order-3" method="get" action="search.php">
+        {% set search = (result.query) ? result.query : '' %}
+        <input type="search" name="query" placeholder="Search for a product" class="form-control flex-fill" value="{{search}}">
+        <button type="submit" class="d-none d-md-inline btn btn-primary"><i class="fa fa-search"></i></button>
+    </form>
+    <nav class="nav flex-grow-1 order-5 justify-content-end">
+        <a class="btn btn-primary" href="cart.php">
+            <i class="fa fa-shopping-basket"></i>
+            <span class="badge badge-warning">0</span>
+        </a>
+
+        {% set wishcount = (wish) ? wish : 0 %}
+        <a class="btn btn-primary" href="list.php">
+            <i class="fa fa-heart"></i>
+            <span class="badge badge-warning">{{wishcount}}</span>
+        </a>
+    </nav>
+    <div class="collapse navbar-collapse flex-grow-0 order-8" id="main-nav">
+        <nav class="nav navbar-nav ml-auto">
+        {% for item in navigation.navigation %}
+            {% set active = ( item.url == navigation.active ) ? 'active' : '' %}
+            <a class="nav-link {{active}}" href="{{item.url}}">{{item.menu}}</a>
+        {% endfor %}
+        </nav>
+    </div>
+</div>

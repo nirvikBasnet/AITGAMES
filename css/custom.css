@@ -1,0 +1,3 @@
+.price::before{
+  content: "\0024";
+}
