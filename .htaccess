@@ -1,10 +1,10 @@
-RewriteEngine On
-RewriteBase /
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^(.+)$ index.php [QSA,L]
+# disable localhost configuration by adding # to each line
+# SetEnv dbhost localhost
+# SetEnv dbuser website
+# SetEnv dbpass password
+# SetEnv dbname data
 
-SetEnv HOST localhost
-SetEnv USER root
-SetEnv PASS AdvancedWeb2019
-SetEnv DB aitgames
+SetEnv dbhost oa4.info
+SetEnv dbuser aitgames
+SetEnv dbpass AdvancedWeb2019
+SetEnv dbname aitgames
