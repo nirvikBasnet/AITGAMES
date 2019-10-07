@@ -5,7 +5,7 @@ Download the Git Command Line Interface from [https://git-scm.com/download/win](
 ## Cloning the repository
 You will need the files from this repository. This can be easily achieved by cloning the repository by running the following command in your project directory.
 ```
-git clone https://github.com/nirvikBasnet/advWebPrototype .
+git clone https://github.com/nirvikBasnet/advancedWebAITGAMES .
 ```
 Don't leave out the period at the end. 
 
