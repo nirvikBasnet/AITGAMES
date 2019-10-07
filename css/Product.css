@@ -1,0 +1,247 @@
+body{
+    background-color: #f9fbfb;
+    width: 1200px;
+    margin:0 auto;
+}
+
+img{
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#contain{
+    min-height: 94%;
+    width: 1200px;
+    margin: auto;
+    padding-bottom: 80px;
+}
+.f_product{
+    height: 100%;
+}
+
+.row{
+    display:flex;
+    width: 1200px;
+    flex-direction: row;
+    margin:0 auto;
+}
+
+.content{
+    min-height: 95%;
+}
+
+.column{
+    padding: 10px;
+    display: flex;
+    flex: 1;
+    height: 350px;
+}
+
+.product_container {
+    position: relative;
+    display: flex;
+    justify-content:center;
+    background-color: white;
+}
+
+.products{
+    display:table-footer-group;
+}
+
+.product-header{
+    font-size: 18px;
+}
+
+.price{
+    text-align: center;
+}
+
+.add-product{
+    font-weight: bold;
+    font-size: 110%;
+    text-transform: uppercase;
+    padding: 8px;
+    border-radius: 0;
+    border: 1px solid;
+    background-color: #56FF15;
+}
+
+.cart_button{
+    text-align: center;
+    padding: 5px;
+}
+
+.panel-group{
+    width: 100%;
+    margin:0 auto;
+}
+
+.hidden{
+    display: none;
+}
+
+/*Tab Content*/
+ul.tabs {
+    margin-top: 0;
+    padding: 0;
+    float: left;
+    list-style: none;
+    height: 32px;
+    border-bottom: 1px solid #333;
+    width: 100%;
+}
+
+ul.tabs li {
+    float: left;
+    font-size: 20px;
+    margin: 0;
+    cursor: pointer;
+    padding: 0px 21px;
+    height: 31px;
+    line-height: 31px;
+    border-top: 1px solid #333;
+    border-left: 1px solid #333;
+    border-bottom: 1px solid #333;
+    background-color: #666;
+    color: #ccc;
+    overflow: hidden;
+    position: relative;
+}
+
+.tab_last { border-right: 1px solid #333; }
+
+ul.tabs li:hover {
+    background-color: #ccc;
+    color: #333;
+}
+
+ul.tabs li.active {
+    background-color: #fff;
+    color: #333;
+    border-bottom: 1px solid #fff;
+    display: block;
+}
+
+.tab_container {
+    border: 1px solid #333;
+    margin-top: -10px;
+    border-top: none;
+    clear: both;
+    float: left;
+    width: 100%;
+    background: #fff;
+    overflow: auto;
+}
+
+.tab_content {
+    padding: 20px;
+    display: none;
+}
+
+.tab_drawer_heading { display: none; }
+
+@media screen and (max-width: 480px) {
+    .tabs {
+        display: none;
+    }
+    .tab_drawer_heading {
+        background-color: #ccc;
+        color: #fff;
+        border-top: 1px solid #333;
+        margin: 0;
+        padding: 5px 20px;
+        display: block;
+        cursor: pointer;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    .d_active {
+        background-color: #666;
+        color: #fff;
+    }
+}
+
+/* Wishlist Button */
+
+svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* opacity: 0; */
+    /* z-index: -1; */
+}
+
+svg path {
+    fill: #BD10E0;
+    transition: transform 200ms ease-in-out, opacity 200ms ease;
+    /* opacity: 0; */
+}
+
+.btn:hover{
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.btn-wishlist1 {
+    margin-top: 20px;
+    transform-style: preserve-3d;
+    transform: translateZ(0);
+    padding: 12px;
+    border-radius: 3px;
+    border: none;
+    background-color: transparent;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 200ms ease, padding-right 200ms ease-out box-shadow 200ms ease;
+    box-shadow: none;
+}
+.btn-wishlist1:hover {
+    background-color: #F3F3F3;
+    padding-right: 32px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+.btn-wishlist1 svg path {
+    transform: translateX(-56px);
+    /* opacity: 0; */
+}
+.btn-wishlist1:hover svg path {
+    transform: translateX(0px);
+    /* z-index: 1; */
+}
+.btn-wishlist1 .label1 {
+    transition: transform 200ms ease-out;
+}
+.btn-wishlist1:hover .label1 {
+    transform: translateX(20px);
+}
+.btn-wishlist1 .icon1 {
+    transition: color 200ms ease;
+    position: relative;
+}
+.btn-wishlist1:hover .icon1 {
+    color: white;
+}
+
+.icon1 {
+    float: left;
+    text-align: center;
+    width: 24px;
+    line-height: 24px;
+    margin-right: 12px;
+    color: #9b9b9b;
+}
+
+.label1 {
+    float: left;
+    line-height: 24px;
+    font-family: "SF UI Text";
+    font-weight: bold;
+    margin-right: 12px;
+    color: #4a4a4a;
+}

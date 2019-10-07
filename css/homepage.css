@@ -1,0 +1,60 @@
+/*
+*  Imports
+*/
+@import url(https://fonts.googleapis.com/css?family=Lato:400,300,700,900);
+@import url(https://fonts.googleapis.com/css?family=Roboto+Slab:400,700);
+
+
+/*
+*  Global styles
+*/
+html,
+body,
+.main-container {
+    height: 100%;
+    margin: 0 auto;
+}
+
+.main {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+/*
+*  Typography
+*/
+
+h2,
+h3 {
+    margin-top: 6px;
+    margin-bottom: 6px;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: -1px;
+    color: #313131;
+    word-wrap: break-word;
+}
+
+h2 {
+    font-size: 28px;
+}
+
+h3 {
+    font-size: 20px;
+    width: 170px;
+
+}
+
+h4 {
+    margin-bottom: 12px;
+    font-size: 22px;
+    line-height: 40px;
+    color: rgba(0, 182, 15, 0.7);
+}
+
+.card:hover{
+    -moz-box-shadow: 0 0 10px #ccc;
+    -webkit-box-shadow: 0 0 10px #ccc;
+    box-shadow: 0 0 10px #ccc;
+}
+

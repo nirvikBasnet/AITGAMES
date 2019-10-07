@@ -1,31 +1,38 @@
-<div class="navbar navbar-dark bg-primary navbar-expand-lg sticky-top">
-    <a href="index.php" class="navbar-brand order-1">Shop</a>
-    <button class="navbar-toggler order-4" data-target="#main-nav" data-toggle="collapse">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <form class="form-inline flex-grow-1 order-3" method="get" action="search.php">
-        {% set search = (result.query) ? result.query : '' %}
-        <input type="search" name="query" placeholder="Search for a product" class="form-control flex-fill" value="{{search}}">
-        <button type="submit" class="d-none d-md-inline btn btn-primary"><i class="fa fa-search"></i></button>
-    </form>
-    <nav class="nav flex-grow-1 order-5 justify-content-end">
-        <a class="btn btn-primary" href="cart.php">
-            <i class="fa fa-shopping-basket"></i>
-            <span class="badge badge-warning">0</span>
-        </a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light"  style="font-size:24px;">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="nav justify-content-center">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Platform</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="PC.php">PC</a>
+                    <a class="dropdown-item" href="PS4.php">PS4</a>
+                    <a class="dropdown-item" href="#">XBOX</a>
+                    <a class="dropdown-item" href="#">NINTENDO SWITCH</a>
+                </div>
+            </li>
 
-        {% set wishcount = (wish) ? wish : 0 %}
-        <a class="btn btn-primary" href="list.php">
-            <i class="fa fa-heart"></i>
-            <span class="badge badge-warning">{{wishcount}}</span>
-        </a>
-    </nav>
-    <div class="collapse navbar-collapse flex-grow-0 order-8" id="main-nav">
-        <nav class="nav navbar-nav ml-auto">
-        {% for item in navigation.navigation %}
-            {% set active = ( item.url == navigation.active ) ? 'active' : '' %}
-            <a class="nav-link {{active}}" href="{{item.url}}">{{item.menu}}</a>
-        {% endfor %}
-        </nav>
+            <li class="nav-item">
+                <a class="nav-link active" href="sell.php">Sell</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="newsPage.php">News</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="FAQ.php">FAQ</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="aboutus.php">About us</a>
+            </li>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </ul>
+    
+        
     </div>
-</div>
+</nav>

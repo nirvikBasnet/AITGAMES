@@ -1,11 +1,13 @@
 <!doctype html>
 <html lang="en">
     {% include 'partials/head.twig' %}
+    <head>
+        <link type="text/css" rel="stylesheet" href="css/Product.css">
+    </head>
     <body >
     {% include 'partials/navigation.twig' %}
-        <main class="container-fluid" style="padding-top:30px;">
-            <div class="row">
-                <div class="col-md-5 offset-md-1">
+            <div class="row product_container">
+                <div class="column products">
                     {% if detail.images | length > 1 %}
                     <div class="carousel slide" id="product-carousel" data-ride="carousel">
                         <div class="carousel-inner">
@@ -39,39 +41,77 @@
                     {% endif %}
                      
                 </div>
-                <div class="col-md-5">
-                    <h3 class="text-capitalize">{{detail.product.name}}</h3>
-                    
-                    <p>{{detail.product.description}}</p>
-                    <h5 class="price">{{detail.product.price}}</h5>
+
+                <div class="column products">
+                    <div class="product-header">
+                        <h3>{{detail.product.name}}</h3>
+                        <strong>Platform - </strong> <br><br>
+                        <strong>Genre - </strong>
+                    </div>
+                </div>
+
+                <div class="column products">
+                    <h1 class="price">${{detail.product.price}}</h5>
                     {% set class= ( detail.product.quantity < 5 ) ? 'text-danger' : 'text-success' %}
 
-                    <p id="available" class="{{class}}"> {{detail.product.quantity}} available</p>
+                    <p align="center" id="available" class="{{class}}"> {{detail.product.quantity}} available</p>
 
                     <form id="cart-form w-100" method="get">
-                        <div class="d-flex flex-wrap">
-                                <div class="input-group flex-nowrap mr-2" style="min-width:5em;max-width:8em;">
-                                    <div class="input-group-prepend">
-                                        <button id="minus" class="btn btn-primary" type="button">&minus;</button>
-                                    </div>
-                                    <input id="quantity" type="text" class="form-control text-center" name="quantity" value="1" max="{{detail.product.quantity}}" min="1" style="min-width:3em;">
-                                    <div class="input-group-append">
-                                        <button id="plus" class="btn btn-primary"  type="button">&plus;</button>
-                                    </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary mr-2" name="add" value="cart">
+                            <div style="display: grid; justify-content: space-between; grid-template-columns: auto 200px auto;">
+                                <button id="minus" class="btn btn-primary" type="button">&minus;</button>
+                                <input id="quantity" type="text" class="form-control text-center" name="quantity" 
+                                value="1" max="{{detail.product.quantity}}" min="1" style="min-width:3em;">
+                                <button id="plus" class="btn btn-primary"  type="button">&plus;</button>
+                            </div>
+                            <br><br>
+
+                            <div class="cart_button">
+                                <button type="submit" class="btn add-product" name="add" value="cart">
                                     <i class="fa fa-shopping-basket"></i>
-                                    Buy
+                                    Add to cart
                                 </button>
-                                <button type="submit" class="btn btn-primary mr-2" name="add" value="list">
-                                    <i class="fa fa-heart"></i>
+                            </div>
+                            <div class="cart_button">
+                                <button type="submit" class="btn btn-wishlist1" name="add" value="list">
+                                    <svg width="56px"
+                                        height="48px"
+                                        version="1.1"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M 0 0
+                                                L 56 0
+                                                L 40 48
+                                                L 0 48"
+                                            stroke="none">
+                                        </path>
+                                    </svg>
+                                    <div class="icon1">
+                                        <i class="fa fa-heart"></i>
+                                    </div>
+                                    <div class="label1">
+                                        <span class="label-text1">
+                                            Add to wishlist
+                                        </span>
+                                    </div>
                                 </button>
-                        </div>
+                            </div>
+
                         <input type="hidden" name="product_id" value="{{detail.product.product_id}}">
                     </form>
+                </div>    
+            </div>
+            <ul class="tabs">
+                <li class="active" rel="tab1">Description</li>
+                <li rel="tab2">Seller</li>
+            </ul>
+
+            <div class="tab_container">
+                <h3 class="d_active tab_drawer_heading" rel="tab1">Tab 1</h3>
+                <div id="tab1" class="tab_content">
+                    {{detail.product.description}}
                 </div>
             </div>
-        </main>
+
+            <script  src="Scripts/product.js"></script>
         <script>
         // script for add and minus button in detail page
         $(document).ready(
