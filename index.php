@@ -39,6 +39,6 @@ echo $template -> render( array(
     'wish' => $wish_total,
     'navigation' => $navigation,
     'products' => $products,
-    'title' => 'Welcome to the shop'
+    'title' => 'AIT Games'
 ) );
 ?>

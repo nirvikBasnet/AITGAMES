@@ -1,25 +1,20 @@
 <?php
+
 namespace aitSydney;
+
+
+
 class Database{
-    private $user;
-    private $password;
-    private $host;
-    private $db;
+
     protected $connection;
-    protected function __construct(){
-        $this -> getConfig();
-        $this -> connection = mysqli_connect(
-            $this -> host,
-            $this -> user,
-            $this -> password,
-            $this -> db
-        );
+
+    public function __construct(){
+
+        $this -> connection = mysqli_connect(getenv('dbhost'),getenv('dbuser'),'123456','aitgames');
+        echo getenv('dbpass');
+
     }
-    private function getConfig(){
-        $this -> user = getenv('dbuser');
-        $this -> password = getenv('dbpass');
-        $this -> host = getenv('dbhost');
-        $this -> db = getenv('dbname');
-    }
+
 }
+
 ?>
