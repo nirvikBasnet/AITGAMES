@@ -7,9 +7,19 @@ use aitsydney\WishList;
 $wish = new WishList();
 $wish_total = $wish -> getWishListTotal();
 
+//create an instance of Product class
+use aitsydney\Product;
 
+$p = new Product();
+$products = $p -> getProducts();
 
-// create navigation
+//create categories
+use aitsydney\Category;
+
+$cat = new Category();
+$categories = $cat -> getCategories();
+
+//create navigation
 use aitsydney\Navigation;
 
 $nav = new Navigation();
@@ -17,17 +27,18 @@ $navigation = $nav -> getNavigation();
 
 //create twig loader for templates
 $loader = new Twig_Loader_Filesystem('templates');
-//create twig environment and pass the loader
+
+//create twig environment
 $twig = new Twig_Environment($loader);
-//call a twig template
+
+//load a twig template
 $template = $twig -> load('cart.twig');
 
-//output the template and pass the data
 echo $template -> render( array(
-  'result' => $result,
-  'navigation' => $navigation,
-  'wish' => $wish_total,
-  'title' => "Shopping Cart"
+    'categories' => $categories,
+    'wish' => $wish_total,
+    'navigation' => $navigation,
+    'products' => $products,
+    'title' => 'Shopping Cart'
 ) );
-
 ?>
