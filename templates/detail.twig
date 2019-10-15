@@ -6,112 +6,112 @@
     </head>
     <body >
     {% include 'partials/navigation.twig' %}
-            <div class="row product_container">
-                <div class="column products">
-                    {% if detail.images | length > 1 %}
-                    <div class="carousel slide" id="product-carousel" data-ride="carousel">
-                        <div class="carousel-inner">
-                        {% for image in detail.images %}
-                        {% set active = loop.index == 1 ? 'active' : '' %}
-                            <div class="carousel-item {{active}}">
-                                <img class="w-100" src="images/products/{{image}}">
-                            </div>
-                        {% endfor %}
+        <div class="row product_container">
+            <div class="column products">
+                {% if detail.images | length > 1 %}
+                <div class="carousel slide" id="product-carousel" data-ride="carousel">
+                    <div class="carousel-inner">
+                    {% for image in detail.images %}
+                    {% set active = loop.index == 1 ? 'active' : '' %}
+                        <div class="carousel-item {{active}}">
+                            <img class="w-100" src="images/products/{{image}}">
                         </div>
-                        <ol class="carousel-indicators">
-                            {% for image in detail.images %}
-                            <li data-target="#product-carousel" data-slide-to="{{loop.index0}}">
-                                <img src="images/products/{{image}}" class="img-fluid">
-                            </li>
-                            {% endfor %}
-                        </ol>
-                        <a class="carousel-control-prev" href="#product-carousel" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#product-carousel" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
+                    {% endfor %}
                     </div>
-                    {% else %}
+                    <ol class="carousel-indicators">
                         {% for image in detail.images %}
+                        <li data-target="#product-carousel" data-slide-to="{{loop.index0}}">
                             <img src="images/products/{{image}}" class="img-fluid">
+                        </li>
                         {% endfor %}
-                    {% endif %}
-                     
+                    </ol>
+                    <a class="carousel-control-prev" href="#product-carousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#product-carousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
                 </div>
-
-                <div class="column products">
-                    <div class="product-header">
-                        <h3>{{detail.product.name}}</h3>
-                        <strong>Platform - </strong> <br><br>
-                        <strong>Genre - </strong>
-                    </div>
-                </div>
-
-                <div class="column products">
-                    <h1 class="price">${{detail.product.price}}</h5>
-                    {% set class= ( detail.product.quantity < 5 ) ? 'text-danger' : 'text-success' %}
-
-                    <p align="center" id="available" class="{{class}}"> {{detail.product.quantity}} available</p>
-
-                    <form id="cart-form w-100" method="get">
-                            <div style="display: grid; justify-content: space-between; grid-template-columns: auto 200px auto;">
-                                <button id="minus" class="btn btn-primary" type="button">&minus;</button>
-                                <input id="quantity" type="text" class="form-control text-center" name="quantity" 
-                                value="1" max="{{detail.product.quantity}}" min="1" style="min-width:3em;">
-                                <button id="plus" class="btn btn-primary"  type="button">&plus;</button>
-                            </div>
-                            <br><br>
-
-                            <div class="cart_button">
-                                <button type="submit" class="btn add-product" name="add" value="cart">
-                                    <i class="fa fa-shopping-basket"></i>
-                                    Add to cart
-                                </button>
-                            </div>
-                            <div class="cart_button">
-                                <button type="submit" class="btn btn-wishlist1" name="add" value="list">
-                                    <svg width="56px"
-                                        height="48px"
-                                        version="1.1"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M 0 0
-                                                L 56 0
-                                                L 40 48
-                                                L 0 48"
-                                            stroke="none">
-                                        </path>
-                                    </svg>
-                                    <div class="icon1">
-                                        <i class="fa fa-heart"></i>
-                                    </div>
-                                    <div class="label1">
-                                        <span class="label-text1">
-                                            Add to wishlist
-                                        </span>
-                                    </div>
-                                </button>
-                            </div>
-
-                        <input type="hidden" name="product_id" value="{{detail.product.product_id}}">
-                    </form>
-                </div>    
+                {% else %}
+                    {% for image in detail.images %}
+                        <img src="images/products/{{image}}" class="img-fluid">
+                    {% endfor %}
+                {% endif %}
+                    
             </div>
-            <ul class="tabs">
-                <li class="active" rel="tab1">Description</li>
-                <li rel="tab2">Seller</li>
-            </ul>
 
-            <div class="tab_container">
-                <h3 class="d_active tab_drawer_heading" rel="tab1">Tab 1</h3>
-                <div id="tab1" class="tab_content">
-                    {{detail.product.description}}
+            <div class="column products">
+                <div class="product-header">
+                    <h3>{{detail.product.name}}</h3>
+                    <strong>Platform - </strong> <br><br>
+                    <strong>Genre - </strong>
                 </div>
             </div>
 
-            <script  src="Scripts/product.js"></script>
+            <div class="column products">
+                <h1 class="price">${{detail.product.price}}</h5>
+                {% set class= ( detail.product.quantity < 5 ) ? 'text-danger' : 'text-success' %}
+
+                <p align="center" id="available" class="{{class}}"> {{detail.product.quantity}} available</p>
+
+                <form id="cart-form w-100" method="get">
+                        <div style="display: grid; justify-content: space-between; grid-template-columns: auto 200px auto;">
+                            <button id="minus" class="btn btn-primary" type="button">&minus;</button>
+                            <input id="quantity" type="text" class="form-control text-center" name="quantity" 
+                            value="1" max="{{detail.product.quantity}}" min="1" style="min-width:3em;">
+                            <button id="plus" class="btn btn-primary"  type="button">&plus;</button>
+                        </div>
+                        <br><br>
+
+                        <div class="cart_button">
+                            <button type="submit" class="btn add-product" name="add" value="cart">
+                                <i class="fa fa-shopping-basket"></i>
+                                Add to cart
+                            </button>
+                        </div>
+                        <div class="cart_button">
+                            <button type="submit" class="btn btn-wishlist1" name="add" value="list">
+                                <svg width="56px"
+                                    height="48px"
+                                    version="1.1"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M 0 0
+                                            L 56 0
+                                            L 40 48
+                                            L 0 48"
+                                        stroke="none">
+                                    </path>
+                                </svg>
+                                <div class="icon1">
+                                    <i class="fa fa-heart"></i>
+                                </div>
+                                <div class="label1">
+                                    <span class="label-text1">
+                                        Add to wishlist
+                                    </span>
+                                </div>
+                            </button>
+                        </div>
+
+                    <input type="hidden" name="product_id" value="{{detail.product.product_id}}">
+                </form>
+            </div>    
+        </div>
+        <ul class="tabs">
+            <li class="active" rel="tab1">Description</li>
+            <li rel="tab2">Seller</li>
+        </ul>
+
+        <div class="tab_container">
+            <h3 class="d_active tab_drawer_heading" rel="tab1">Tab 1</h3>
+            <div id="tab1" class="tab_content">
+                {{detail.product.description}}
+            </div>
+        </div>
+
+        <script  src="Scripts/product.js"></script>
         <script>
         // script for add and minus button in detail page
         $(document).ready(

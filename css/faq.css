@@ -1,0 +1,22 @@
+body{
+    font-family: 'Arial', sans-serif;
+    background-color: #f3f3f3;
+}
+.container{
+    width: 1200px;
+}
+
+.panel-group{
+    width: 100%;
+    background-color: white;
+    margin:0 auto;
+}
+
+#FAQ-Title{
+    margin-top: 100px;
+    font-size: 20px;
+    font-weight: bolder;
+    text-align: center;
+    background-color: white;
+    width: 100%;
+}
