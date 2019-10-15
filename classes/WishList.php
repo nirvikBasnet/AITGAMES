@@ -1,9 +1,7 @@
 <?php
 namespace aitsydney;
-
 use aitsydney\Database;
 use \Exception;
-
 class WishList extends Database {
   private $response = array();
   private $errors = array();
@@ -11,14 +9,12 @@ class WishList extends Database {
   public function __construct(){
     parent::__construct();
   }
-
   private function getUserAuthStatus(){
     if( session_status() == PHP_SESSION_NONE ){
       session_start();
     }
     return ( isset($_SESSION['auth']) ) ? $_SESSION['auth'] : false;
   }
-
   public function addItem( $product_id ){
     try{
       if( !$this -> getUserAuthStatus() ){
@@ -81,7 +77,6 @@ class WishList extends Database {
       return false;
     }
   }
-
   private function getWishListId( $account_id, $createnew = true ){
     //find user's wishlist or create a new one
     $find_query = "SELECT wishlist_id FROM wishlist WHERE account_id = UNHEX( ? )";
@@ -115,7 +110,6 @@ class WishList extends Database {
     }
     return $wishlist_id;
   }
-
   private function createWishList( $account_id ){
     $create_query = "
     INSERT INTO wishlist 
@@ -139,7 +133,6 @@ class WishList extends Database {
       return false;
     }
   }
-
   public function getWishListTotal(){
     $get_query = "
     SELECT 

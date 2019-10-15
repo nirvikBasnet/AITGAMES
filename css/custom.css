@@ -1,3 +1,13 @@
 .price::before{
   content: "\0024";
 }
+.categories a{
+  text-transform: capitalize;
+}
+.product-name{
+  text-transform: capitalize;
+}
+/* cart section */
+.item-quantity {
+  max-width: 80px;
+}

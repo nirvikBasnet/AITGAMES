@@ -1,62 +1,50 @@
 <?php
 namespace aitsydney;
-
 use aitsydney\Database;
 use \Exception;
-
 class Account extends Database{
   public function __construct(){
     parent::__construct();
   }
-
   public function register( $email, $password ){
+    $query = "
+      INSERT INTO account ( account_id, email, password, created, accessed, updated )
+      VALUES ( UNHEX(?), ?, ?, NOW(), NOW(), NOW() )
+    ";
     $register_errors = array();
-    $register_response = array();
-
-    if( filter_var($email, FILTER_VALIDATE_EMAIL) == false ){
-      $register_errors['email'] = 'invalid email address';
-    }
+    $response = array();
     if( strlen($password) < 8 ){
-      $register_errors['password'] = 'minimum 8 characters';
+      $register_errors['password'] = "minimum 8 characters";
     }
-
-    if( count($register_errors) == 0 ){
+    if( filter_var($email, FILTER_VALIDATE_EMAIL ) == false ){
+      $register_errors['email'] = "email address not valid";
+    }
+    //if there are no errors with email and password
+    if( count( $register_errors ) == 0 ){
       //hash the password
       $hash = password_hash( $password, PASSWORD_DEFAULT );
-      //generate account id
-      $id = $this -> createAccountId();
-      //query to insert into database
-      $query = "
-        INSERT INTO account (account_id,email,password,created,accessed,updated)
-        VALUES( UNHEX(?), ?, ?, NOW(), NOW(), NOW() )
-      ";
+      $account_id = $this -> createAccountId();
+      
       try{
-        $statement = $this->connection->prepare($query);
+        $statement = $this -> connection -> prepare( $query );
         if( $statement == false ){
-          throw(new Exception('query failed') );
+          throw( new \Exception('query error') );
         }
-        $statement -> bind_param('sss', $id, $email, $hash );
+        
+        if( $statement -> bind_param('sss', $account_id , $email, $hash ) == false ){
+          throw( new \Exception('cannot bind parameters') );
+        }
         if( $statement -> execute() == false ){
-          throw( new Exception('execute failed') );
+          throw( new \Exception('failed to execute') );
         }
         else{
-          //account is created
-          $register_response['success'] = true;
-          $this -> setUserSession( $id );
+          // account is created in database
+          
+          $response['success'] = true;
         }
       }
       catch( Exception $exc ){
-        //error_log( $exc -> getMessage() );
-        //check if it is a duplicate email error
-        $message = $exc -> getMessage();
-        if( $message !== 'execute failed' ){
-          error_log( $message );
-          $errors['system'] = 'Something went terribly wrong';
-        }
-        else{
-          $errors['email'] = 'Your email is already used';
-        }
-
+        error_log( $exc -> getMessage() );
       }
     }
     else{
@@ -68,7 +56,6 @@ class Account extends Database{
     }
     return $register_response;
   }
-
   public function createAccountId(){
     if( function_exists('random_bytes') ){
       $bytes = random_bytes(16);
@@ -78,21 +65,18 @@ class Account extends Database{
     }
     return bin2hex($bytes);
   }
-
   private function setUserSession( $account_id ){
     if( session_status() == PHP_SESSION_NONE ){
       session_start();
     }
     $_SESSION['auth'] = $account_id;
   }
-
   public function logout(){
     if( session_status() == PHP_SESSION_NONE ){
       session_start();
     }
     unset( $_SESSION['auth'] );
   }
-
   public function login( $email, $password ){
     $response = array();
     $errors = array();
@@ -120,32 +104,31 @@ class Account extends Database{
       $response['success'] = false;
       return $response;
     }
-
-    //process result of query
-    $result = $statement -> get_result();
-    $account = $result -> fetch_assoc();
-
+    // check authentication errors
     try{
+      $result = $statement -> get_result();
+      $row = $result -> fetch_assoc();
       if( $result -> num_rows == 0 ){
-        throw new Exception('Credentials supplied do not match our system');
+        throw new Exception('credentials supplied do not match our system');
       }
-      if( password_verify( $password, $account['password'] ) == false ){
-        throw new Exception('Credentials supplied do not match our system');
+      //check password
+      if( password_verify( $password, $row['password']) == false ){
+        // password supplied does not match hash in database
+        throw new Exception('credentials supplied do not match our system');
       }
     }
     catch( Exception $exc ){
       $errors['account'] = $exc -> getMessage();
-    }
-    // check if there are errors
-    if( count($errors) > 0 ){
-      $response['success'] = false;
       $response['errors'] = $errors;
+      $response['success'] = false;
+      return $response;
     }
-    else{
+    if( count($errors) == 0 ){
       $response['success'] = true;
-      $this -> setUserSession( $account['account_id'] );
+      $this -> setUserSession( $row['account_id']);
     }
     return $response;
   }
+  
 }
 ?>

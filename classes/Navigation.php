@@ -1,59 +1,58 @@
 <?php
 namespace aitsydney;
-
 use aitsydney\Database;
-
 class Navigation extends Database{
-    public $nav_array = array();
-
+    public $isAuthenticated = false;
+    private $min_level = 0;
+    private $max_level = 1;
+    public $navigation = array();
     public function __construct(){
         parent::__construct();
         $this -> initSession();
+        if( isset($_SESSION['auth']) ){
+            $this -> isAuthenticated = true;
+            $this -> min_level = 1;
+            $this -> max_level = 2;
+        }
     }
-
-    public function initSession(){
+    private function initSession(){
         if( session_status() == PHP_SESSION_NONE ){
             session_start();
         }
     }
-
     public function getNavigation(){
-        if( isset($_SESSION['auth']) ){
-            $max_level = 2;
-            $min_level = 1;
-        }
-        else{
-            $max_level = 1;
-            $min_level = 0;
-        }
-        $query = "
+        $nav_query = "
             SELECT 
-            page_id,
             name,
             url,
             menu,
             content
-            FROM page 
-            WHERE level >= ? 
-            AND level <= ? 
+            FROM page
+            WHERE level >= ?
+            AND level <= ?
             AND active = 1
             ORDER BY menu_order ASC
         ";
-        $statement = $this -> connection -> prepare( $query );
-        $statement -> bind_param('ii', $min_level, $max_level );
-        if( $statement -> execute() ){
-            $result = $statement -> get_result();
-            $nav_items = array();
-            while( $row = $result -> fetch_assoc() ){
-                array_push( $nav_items, $row );
+        $statement = $this -> connection -> prepare( $nav_query );
+        $statement -> bind_param( 'ii', $this -> min_level, $this -> max_level );
+        try{
+            if( $statement -> execute() == false ){
+                throw( new Exception('Query error') );
             }
-            $this -> nav_array['navigation'] = $nav_items;
-            $this -> nav_array['active'] = $this -> getActive();
+            else{
+                $result = $statement -> get_result();
+                $items = array();
+                while( $row = $result -> fetch_assoc() ){
+                    array_push( $items, $row );
+                }
+                $this -> navigation['items'] = $items;
+                $this -> navigation['active'] = basename( $_SERVER['PHP_SELF'] );
+            }
+            return $this -> navigation;
         }
-        return $this -> nav_array;
-    }
-    public function getActive(){
-        return basename( $_SERVER['PHP_SELF'] );
+        catch( Exception $e ){
+            echo $e -> getMessage();
+        }
     }
 }
 ?>

@@ -11,18 +11,18 @@
     <nav class="nav flex-grow-1 order-5 justify-content-end">
         <a class="btn btn-primary" href="cart.php">
             <i class="fa fa-shopping-basket"></i>
-            <span class="badge badge-warning">0</span>
+            {% set cart = (cart_count) ? cart_count : 0 %}
+            <span class="badge badge-warning">{{cart}}</span>
         </a>
-
-        {% set wishcount = (wish) ? wish : 0 %}
         <a class="btn btn-primary" href="list.php">
             <i class="fa fa-heart"></i>
-            <span class="badge badge-warning">{{wishcount}}</span>
+            {% set wish = (wish_count) ? wish_count : 0 %}
+            <span class="badge badge-warning">{{wish}}</span>
         </a>
     </nav>
     <div class="collapse navbar-collapse flex-grow-0 order-8" id="main-nav">
         <nav class="nav navbar-nav ml-auto">
-        {% for item in navigation.navigation %}
+        {% for item in navigation.items %}
             {% set active = ( item.url == navigation.active ) ? 'active' : '' %}
             <a class="nav-link {{active}}" href="{{item.url}}">{{item.menu}}</a>
         {% endfor %}

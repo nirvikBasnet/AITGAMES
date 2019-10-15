@@ -1,50 +1,47 @@
 <?php
 require('vendor/autoload.php');
-
-use aitsydney\Navigation;
-
-//get user's wishlist total
-use aitsydney\WishList;
-
-$wish = new WishList();
-
-if( $_SERVER['REQUEST_METHOD'] == 'GET' && isset( $_GET['add'] ) ){
-    $product_id = $_GET['product_id'];
-    //if 'add' == 'list' means the wishlist button has been clicked
-    if( $_GET['add'] == 'list' ){
-        $add = $wish -> addItem($product_id);
-    }
-}
-
-$wish_total = $wish -> getWishListTotal();
-
-$nav = new Navigation();
-$navigation = $nav -> getNavigation();
-
-use aitsydney\ProductDetail;
-
-//get the product id from request
-if( isset( $_GET['product_id']) == false ){
-    echo "incorrect parameter";
+//get the product id from url parameter
+if( isset( $_GET['product_id'] ) == false ){
+    echo "no parameter set";
     exit();
 }
-
-//initialise ProductDetail class
+else{
+    $product_id = $_GET['product_id'];
+}
+use aitsydney\WishList;
+$wish_list = new WishList();
+use aitsydney\ShoppingCart;
+$cart = new ShoppingCart();
+if( $_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['add']) ){
+    //check if add == list
+    if( $_GET['add'] == 'list' ){
+        $add_to_wish = $wish_list -> addItem( $_GET['product_id'] );
+    }
+    if( $_GET['add'] == 'cart' ){
+        $add_to_cart = $cart -> addItem( $_GET['product_id'], $_GET['quantity']);
+    }
+}
+$wish_total = $wish_list -> getWishListTotal();
+$cart_total = $cart -> getCartTotal();
+use aitsydney\Navigation;
+$nav = new Navigation();
+$nav_items = $nav -> getNavigation();
+use aitsydney\ProductDetail;
+//create an instance of ProductDetail class
 $pd = new ProductDetail();
 $detail = $pd -> getProductDetail( $_GET['product_id'] );
-
-//create the view using Twig
+//initialise twig template
 $loader = new Twig_Loader_Filesystem('templates');
-//create twig environment and pass the loader
+//create twig environment
 $twig = new Twig_Environment($loader);
-//call a twig template
+//load a twig template
 $template = $twig -> load('detail.twig');
-//output the template and pass the data
-
-echo $template -> render( array(
-    'navigation' => $navigation,
-    'wish' => $wish_total,
+//pass values to twig
+echo $template -> render([
+    'wish_count' => $wish_total,
+    'cart_count' => $cart_total,
+    'navigation' => $nav_items,
     'detail' => $detail,
     'title' => $detail['product']['name']
-) );
+]);
 ?>
