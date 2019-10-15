@@ -1,38 +1,125 @@
 <!doctype html>
 <html lang="en">
     {% include 'partials/head.twig' %}
-    <body>
+    <body >
     {% include 'partials/navigation.twig' %}
-        <main class="container-fluid container" style="padding-top:30px;">
-            {% if wish_items | length > 0 %}
+        <main class="container" style="padding-top:30px;">
+            {% if cart_items.items | length > 0 %}
               <div class="row">
-                <div class="col">
+                <div class="col-12">
                   <h4>
-                    Your cart contains {{ wish_items | length }} items
+                    Your cart contains {{ cart_items.items | length }} items
                   </h4>
                 </div>
               </div>
-              {% for item in wish_items %}
+              <form method="get" id="shopping-cart-form">
+              {% for item in cart_items.items %}
                 <div class="row my-2 mb-4 py-2 border-bottom border-primary">
-                  <div class="col-md-3">
+                  <div class="col-md-2">                  
+                    <a href="detail.php?product_id={{item.product_id}}" class="stretched-link" ></a>
                     <img class="img-fluid" src="images/products/{{item.image}}">
                   </div>
-                  <div class="col-md-4">
-                    <h4>{{item.name}}</h4>
-                    <p>{{item.description | slice(0,80) ~ '...' }}</p>
-                    <a href="detail.php?product_id={{item.product_id}}">Detail</a>
-                  </div>
                   <div class="col-md-5">
-                    <form class="form-inline" method="get">
-                      <input type="hidden" name="product_id" value="{{item.product_id}}">
-                      <button class="btn btn-primary" type="submit" name="action" value="delete">Delete</button>
-                    </form>
+                    <h4 class="text-capitalize">{{item.name}}</h4>
+                    <p>{{item.description | slice(0,120) ~ '...' }}</p>
+                  </div>
+                  <div class="col-md-2">
+                    <h5 class="price item-price">{{item.price}}</h5>
+                  </div>
+                  <div class="col-md-3 d-flex justify-content-between align-items-start">
+                    <div class="input-group mr-2 quantity-group">
+                      <div class="input-group-prepend">
+                        <button type="button" class="btn btn-primary item-quantity-minus">&minus;</button>
+                      </div>
+                      <input class="form-control item-quantity" type="number" name="quantity[]" value="{{item.quantity}}" min="1" max="{{item.available}}">
+                      <div class="input-group-append">
+                        <button type="button" class="btn btn-primary item-quantity-plus">&plus;</button>
+                      </div>
+                    </div>
+                    <button class="btn btn-outline-primary" type="submit" name="action" value="delete">
+                      &times;
+                    </button>
+                  </div>
+                  {# use array symbol in product_id so it is treated as an array #}
+                    <input type="hidden" name="cart_id" value="{{item.cart_id}}">
+                    <input type="hidden" name="product_id[]" value="{{item.product_id}}">
+                    
                   </div>
                 </div>
+                
               {% endfor %}
+                <div class="row">
+                  <div class="col-md-7">
+                    <h4>The total of your purchase is: </h4>
+                  </div>
+                  <div class="col-md-2">
+                    <input name="total" type="hidden" value="{{cart_items.total}}">
+                    <h5 id="cart-total" class="price">{{cart_items.total}}</h5>
+                  </div>
+                  <div class="col-md-3 d-flex justify-content-end">
+                    <button class="btn btn-outline-primary" type="submit" name="action" value="checkout">Checkout</button>
+                  </div>
+                </div>
+              </form>
             {% else %}
-              <h4>No items. Start adding to your cart? <?h4>
+              <h4>No items. Start adding to your cart? </h4>
             {% endif %}
         </main>
+        <script>
+          function updateTotalPrice() {
+            let prices = [];
+            let quantities = [];
+            let items = Array.from( $('.item-price') );
+            items.forEach( (price) => {
+              prices.push( $(price).text() );
+            });
+            let q = Array.from( $('.item-quantity') );
+            q.forEach( (quantity) => {
+              quantities.push( $(quantity).val() );
+            });
+            let total = 0;
+            prices.forEach(( price, index )=>{
+              total = total + ( price * quantities[index] );
+            });
+            $('#cart-total').text(total.toFixed(2));
+          }
+          function updateQuantity( event ) {
+             let elm = event.target;
+             if( elm.tagName == 'BUTTON'){
+               // if the plus button is clicked
+               if( elm.classList.contains('item-quantity-plus') ){
+                 //store reference to input
+                 let input = $(elm).closest('.quantity-group').find('.item-quantity');
+                 //get current quantity as integer
+                 let quantity = parseInt( $(input).val() );
+                 //get the maximum value as integer
+                 let maxvalue = parseInt( $(input).attr('max') );
+                 let newquantity = quantity + 1;
+                 if( newquantity <= maxvalue ){
+                   $(input).val( newquantity );
+                 }
+               }
+               // if the minus button is clicked
+               if( elm.classList.contains('item-quantity-minus') ){
+                 //store reference to input
+                 let input = $(elm).closest('.quantity-group').find('.item-quantity');
+                 //get current quantity as integer
+                 let quantity = parseInt( $(input).val() );
+                 let newquantity = quantity - 1;
+                 if( newquantity >= 1 ){
+                   $(input).val( newquantity );
+                 }
+               }
+             }
+             updateTotalPrice();
+          }
+          
+          $(document).ready( ()=>{
+            //update quantity when use clicks + and -
+            $('#shopping-cart-form').on('click', ( event ) => {
+              updateQuantity( event )
+            });
+          } );
+        </script>
     </body>
 </html>
