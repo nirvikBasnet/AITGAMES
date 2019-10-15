@@ -11,7 +11,9 @@ if( $_SERVER['REQUEST_METHOD'] == 'GET' && isset( $_GET['delete'] ) ){
   $product_id = $_GET['delete'];
   $cart_id = $_GET['cart_id'];
   $delete = $cart -> removeItem( $cart_id, $product_id );
-  print_r( $delete );
+}
+else{
+  $delete = '';
 }
 if( $_SERVER['REQUEST_METHOD'] == 'GET' && isset( $_GET['checkout'] ) ){
   print_r($_GET);
@@ -38,6 +40,7 @@ $twig = new Twig_Environment($loader);
 $template = $twig -> load('cart.twig');
 //output the template and pass the data
 echo $template -> render( array(
+  'delete' => $delete,
   'wish_count' => $wish_total,
   'cart_count' => $cart_total,
   'cart_items' => $cart_items,

@@ -4,6 +4,17 @@
     <body >
     {% include 'partials/navigation.twig' %}
         <main class="container" style="padding-top:30px;">
+          {% if delete %}
+          <div class="alert alert-success position-absolute" style="width:50vw; z-index:999;left:50%;transform:translateX(-50%);">
+            Item deleted successfully
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <script>
+
+          </script>
+          {% endif %}
             {% if cart_items.items | length > 0 %}
               <div class="row">
                 <div class="col-12">
