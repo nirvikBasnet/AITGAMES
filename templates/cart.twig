@@ -36,7 +36,7 @@
                         <button type="button" class="btn btn-primary item-quantity-plus">&plus;</button>
                       </div>
                     </div>
-                    <button class="btn btn-outline-primary" type="submit" name="action" value="delete">
+                    <button class="btn btn-outline-primary" type="submit" name="delete" value="{{item.product_id}}">
                       &times;
                     </button>
                   </div>
@@ -82,6 +82,7 @@
               total = total + ( price * quantities[index] );
             });
             $('#cart-total').text(total.toFixed(2));
+            $('[name="total"]').val( total.toFixed(2));
           }
           function updateQuantity( event ) {
              let elm = event.target;

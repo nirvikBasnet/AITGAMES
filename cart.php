@@ -6,21 +6,17 @@ $wish_list = new WishList();
 //initialise user's cart total
 use aitsydney\ShoppingCart;
 $cart = new ShoppingCart();
-if( $_SERVER['REQUEST_METHOD'] == 'GET' && isset( $_GET['action'] ) ){
-  $product_id = $_GET['product_id'];
-  if( $_GET['action'] == 'delete' ){
-    //$delete = $cart -> removeItem( $product_id );
-  }
-  if( $_GET['action'] == 'checkout' ){
-    print_r($_GET);
-  }
+
+if( $_SERVER['REQUEST_METHOD'] == 'GET' && isset( $_GET['delete'] ) ){
+  $product_id = $_GET['delete'];
+  $cart_id = $_GET['cart_id'];
+  $delete = $cart -> removeItem( $cart_id, $product_id );
+  print_r( $delete );
 }
-if( $_SERVER['REQUEST_METHOD'] == 'GET' && isset( $_GET['update'] ) ){
+if( $_SERVER['REQUEST_METHOD'] == 'GET' && isset( $_GET['checkout'] ) ){
   print_r($_GET);
 }
-if( $_SERVER['REQUEST_METHOD'] == 'GET' && isset( $_GET['update'] ) ){
-  print_r($_GET);
-}
+
 // get the total wishlist items for the navigation
 $wish_total = $wish_list -> getWishListTotal();
 // get the total cart items for the page
