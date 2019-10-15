@@ -4,7 +4,7 @@
   <body>
     {% include 'partials/navigation.twig' %}
     <main class="container-fluid">
-      <div class="row mt-4">
+      <div class="container">
         <div class="col-md-4 offset-md-4">
           {% set notvalid = (register.response.success == false ) ? 'was-validated' : '' %}
           <form id="register-form" action="register.php" method="post" class={{notvalid}}"">

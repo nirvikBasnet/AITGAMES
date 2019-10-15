@@ -1,0 +1,32 @@
+.container {
+    max-width: 1200px;
+    margin:auto;
+}
+
+img{
+    max-width: 100%;
+}
+
+.row1 {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+}
+
+.column1 {
+    flex: 1;
+    margin-right: 30px;
+}
+.column1:last-child{
+    margin-right: auto;
+}
+
+.col40 {
+    max-width: 40%;
+    flex: auto;
+}
+
+.col60 {
+    max-width: 60%;
+    flex:auto;
+}
