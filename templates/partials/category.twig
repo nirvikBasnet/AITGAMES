@@ -1,0 +1,16 @@
+<aside class="categories">
+  <nav class="nav flex-column nav-pills">
+    {% if not categories.active %}
+      {% set all_active = 'active' %}
+    {% else %}
+      {% set all_active = '' %}
+    {% endif %}
+      <a href="index.php" class="nav-link {{all_active}}">All Categories</a>
+    {% for category in categories.items %}
+    {% set active = ( category.category_id == categories.active ) ? 'active' : '' %}
+      <a href="index.php?category_id={{category.category_id}}" class="nav-link text-capitalize {{active}}">
+        {{category.category_name}}
+      </a>
+    {% endfor %}
+  </nav>
+</aside>
