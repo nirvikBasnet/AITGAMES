@@ -1,0 +1,44 @@
+.banner {
+
+}
+
+
+body {
+    margin: 0;
+    font-family: arial, helvetica, sans-serif;
+}
+
+.container {
+    max-width: 960px;
+    margin:auto;
+}
+
+img{
+    max-width: 100%;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    margin: 30px 0;
+}
+
+.column {
+    flex: 1;
+    margin-right: 30px;
+}
+.column:last-child{
+    margin-right: auto;
+}
+
+
+
+.col40 {
+    max-width: 40%;
+    flex: auto;
+}
+
+.col60 {
+    max-width: 60%;
+    flex:auto;
+}
