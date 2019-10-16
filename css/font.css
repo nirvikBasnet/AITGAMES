@@ -1,0 +1,14 @@
+body {
+    font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #313131;
+    background: #ecf0f1;
+}
+
+body,p,a,li {
+    font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 18px;
+}
+
+a {
+    color: #219e9a;
+}
