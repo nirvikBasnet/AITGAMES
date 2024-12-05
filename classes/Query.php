@@ -4,19 +4,12 @@ namespace aitsydney;
 use aitsydney\Database;
 
 class Query extends Database{
-
-  private $response = array();
   private $errors = array();
   private $type = '';
 
   public function __construct(){
     parent::__construct();
   }
-  public function run( String $query, Array $params = array() ){
-    //count number of parameters
-    $param_count = count( $params );
-    //count number of ? in query
-    $q_count = substr_count($query , '?');
 
     //check what kind of query it is
     $lower = trim( strtolower( $query ) );
@@ -24,11 +17,11 @@ class Query extends Database{
       // it is a select query so result needs to be returned
       $this -> type = 'select';
     }
-    elseif( strpos( $lower , 'insert' ) === 0 ){
-      $this -> type = 'insert';
-    }
-    elseif( strpos( $lower , 'update' ) === 0 ){
-      $this -> type = 'update';
+      $queryType = $this -> queryType( $query );
+      if( $queryType['success'] == false ){
+        $this -> errors['query'] = $queryType['error'];
+        throw new Exception( $queryType['error'] );
+      }
     }
     elseif( strpos( $lower , 'delete' ) === 0 ){
       $this -> type = 'delete';
@@ -49,8 +42,6 @@ class Query extends Database{
       if(!$statement){
         throw new Exception('query error');
       }
-      if(!$statement -> bind_param('s', $account_id ) ){
-        throw new Exception('binding error');
       }
       // execute and check for errors
       if(!$statement -> execute() ){
@@ -88,8 +79,6 @@ class Query extends Database{
       $this -> response['data'] = $data;
       $this -> response['success'] = true;
     }
-    $this -> response['errors'] = $errors;
-    return $response;
   }
 }
 ?>
